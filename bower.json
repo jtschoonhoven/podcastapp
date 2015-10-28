@@ -1,0 +1,24 @@
+{
+  "name": "podcastapp",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "jtschoonhoven <jschoonhoven@lyft.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jtschoonhoven/podcastapp",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
