@@ -18,7 +18,11 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "bootstrap": "~3.3.5"
+  "dependencies": {},
+  "devDependencies": {
+    "bootstrap": "~3.3.5",
+    "es6-promise": "~3.0.2",
+    "jquery": "~2.1.4",
+    "backbone": "~1.2.3"
   }
 }

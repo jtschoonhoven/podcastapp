@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "root": true,
+  "extends": 'eslint:recommended',
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "ecmaFeatures": {
+      "blockBindings": true,
+      "forOf": true,
+      "jsx": true
+  },
+  "rules": {
+    "eol-last": [2],
+    "semi": [2],
+    "no-trailing-spaces": [2],
+    "no-var": [2],
+    "block-scoped-var": [2],
+    "no-const-assign": [2],
+    "prefer-const": [2]
+  }
+}
