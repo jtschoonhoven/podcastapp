@@ -8,20 +8,31 @@ const mainBowerFiles = require('gulp-main-bower-files');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
+const babel = require('gulp-babel');
 
-gulp.task('default', ['bundle', 'style', 'vendor']);
-gulp.task('watch', ['watch:bundle', 'watch:style']);
+gulp.task('default', ['bundle', 'jsx', 'style', 'vendor']);
+gulp.task('watch', ['watch:bundle', 'watch:style', 'watch:jsx']);
 
 gulp.task('bundle', function() {
-    browserify("./app/index.js", {debug: true})  // Debug sourcemaps break ST2.
-        .transform(babelify.configure({nonStandard: true, sourceMaps: true}))  // JSX & Flow are nonStandard.
+    browserify("./app/main.js", {debug: true})  // Debug sourcemaps break ST2.
+        .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
         .bundle()
-        .on("error", err => console.log("Error : " + err.message))
+        .on("error", err => console.error("Error : " + err.message))
         .pipe(fs.createWriteStream("./public/javascripts/bundle.js"));
 });
 
 gulp.task('watch:bundle', function () {
     gulp.watch(['./app/**/*.js'], ['bundle']);
+});
+
+gulp.task("jsx", function() {
+  return gulp.src("./app/components_jsx/**/*.js")
+    .pipe(babel({presets: ['react']}))
+    .pipe(gulp.dest("./app/components/"));
+});
+
+gulp.task('watch:jsx', function() {
+    gulp.watch("./app/components_jsx/**/*.js", ['jsx']);
 });
 
 gulp.task('style', function () {
@@ -50,4 +61,3 @@ gulp.task('vendor', function(){
     gulp.src('./bower_components/bootstrap/dist/fonts/*')
         .pipe(gulp.dest('./public/fonts/'));
 });
-

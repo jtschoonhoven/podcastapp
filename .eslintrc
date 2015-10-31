@@ -18,6 +18,7 @@
     "no-var": [2],
     "block-scoped-var": [2],
     "no-const-assign": [2],
-    "prefer-const": [2]
+    "prefer-const": [2],
+    "no-console": [1]
   }
 }
