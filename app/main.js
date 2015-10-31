@@ -1,8 +1,4 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const Listing = require('./components/listing');
+const Router = require('./router');
 
-ReactDOM.render(
-  <Listing></Listing>,
-  document.getElementById('app')
-);
+new Router();
+Backbone.history.start({pushState: true});

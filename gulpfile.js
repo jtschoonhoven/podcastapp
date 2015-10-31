@@ -4,7 +4,6 @@ const gulp = require('gulp');
 const fs = require("fs");
 const browserify = require("browserify");
 const babelify = require("babelify");
-const mainBowerFiles = require('gulp-main-bower-files');
 const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
@@ -46,8 +45,14 @@ gulp.task('watch:style', function () {
 });
 
 gulp.task('vendor', function(){
-    gulp.src('./bower.json')
-        .pipe(mainBowerFiles({overrides: {bootstrap: {main: './dist/js/bootstrap.js'}}}))
+    const vendors = [
+        './bower_components/jquery/dist/jquery.js',
+        './bower_components/underscore/underscore.js',
+        './bower_components/backbone/backbone.js',
+        './bower_comonents/bootstrap/dist/js/bootstrap.js'
+    ];
+
+    gulp.src(vendors)
         .pipe(uglify())
         .pipe(concat('vendor.js'))
         .pipe(gulp.dest("./public/javascripts/"));
