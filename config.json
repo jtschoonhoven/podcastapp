@@ -1,0 +1,13 @@
+{
+    "constants": {
+        "ENV": "PODCAST_ENV"
+    },
+    "development": {
+        "PG_CREDENTIALS": {
+            "user": "jschoonhoven",
+            "database": "public",
+            "host": "localhost",
+            "port": 5432
+        }
+    }
+}

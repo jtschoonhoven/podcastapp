@@ -7,6 +7,7 @@
 
 const pg = require('pg');
 const config = require('../config');
+const env = process.env[config.constants.ENV] || 'development';
 
 /**
  * Postgres query class.
@@ -14,7 +15,7 @@ const config = require('../config');
  */
 class Pg {
   _connect(cb) {
-    return pg.connect(config.PG_CREDENTIALS, cb);
+    return pg.connect(config[env].PG_CREDENTIALS, cb);
   }
 
   _identity(x) { return x; }
