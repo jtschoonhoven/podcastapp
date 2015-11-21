@@ -7,7 +7,7 @@ class DB(object):
     """Extends the psycopg cursor with convenience methods."""
 
     def __init__(self):
-        with open('config.json') as f:
+        with open('../config.json') as f:
             self.config = json.load(f)
         self.env = os.environ.get(self.config['constants']['ENV'], 'development')
         self.cur = None
