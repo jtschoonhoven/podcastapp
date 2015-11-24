@@ -1,8 +1,9 @@
 #!/usr/bin/python
 import json
 import os
+import peewee as db
+import sys
 from datetime import datetime
-from peewee import PostgresqlDatabase, Model, ForeignKeyField, CharField, DateTimeField, TextField, BooleanField
 
 config_path = os.path.join(os.path.dirname(__file__), '..', 'config.json')
 with open(config_path) as f:
@@ -10,98 +11,97 @@ with open(config_path) as f:
 
 env = os.environ.get(config['constants']['ENV'], 'development')
 pg_credentials = config[env]['PG_CREDENTIALS']
-database = PostgresqlDatabase(**pg_credentials)
+database = db.PostgresqlDatabase(**pg_credentials)
 
 
-class BaseModel(Model):
+class BaseModel(db.Model):
     class Meta:
         database = database
 
 
 class Publisher(BaseModel):
-    name = CharField(null=False)
-    created_at = DateTimeField(default=datetime.utcnow)
+    name = db.CharField()
+    created_at = db.DateTimeField(default=datetime.utcnow)
 
     class Meta:
         db_table = 'publishers'
 
 
 class Show(BaseModel):
-    publisher_id = ForeignKeyField(Publisher, related_name='shows')
-    rss_url = CharField(null=False),
-    name = CharField(null=False),
-    description = TextField(),
-    homepage_url = CharField(),
-    image_url = CharField(),
-    language = CharField(),
-    audio = BooleanField(default=True),
-    video = BooleanField(default=False),
-    explicit = BooleanField(default=False),
-    alive = BooleanField(default=True),
-    created_at = DateTimeField(default=datetime.utcnow)
+    publisher = db.ForeignKeyField(Publisher, related_name='shows')
+    rss_url = db.CharField()
+    name = db.CharField()
+    description = db.TextField(null=True)
+    homepage_url = db.CharField(null=True)
+    image_url = db.CharField(null=True)
+    language = db.CharField(null=True)
+    audio = db.BooleanField(default=True)
+    video = db.BooleanField(default=False)
+    explicit = db.BooleanField(default=False)
+    alive = db.BooleanField(default=True)
+    created_at = db.DateTimeField(default=datetime.utcnow)
 
     class Meta:
         db_table = 'shows'
 
 
 class Episode(BaseModel):
-    show_id = ForeignKeyField(Show, related_name='episodes')
-    title = CharField(null=False),
-    episode_url = CharField(null=False),
-    image_url = CharField(),
-    hash = CharField(),
-    author = CharField(),
-    description = TextField(),
-    guid = CharField(),
-    audio_url = CharField(),
-    audio_encoding = CharField(),
-    audio_length = CharField(),
-    video_url = CharField(),
-    video_encoding = CharField(),
-    video_length = CharField(),
-    explicit = BooleanField(),
-    published_at = DateTimeField(),
-    created_at = DateTimeField(default=datetime.utcnow)
+    show = db.ForeignKeyField(Show, related_name='episodes')
+    title = db.CharField()
+    description = db.TextField(null=True)
+    media_url = db.CharField(unique=True)
+    media_encoding = db.CharField()
+    media_length = db.CharField(null=True)
+    image_url = db.CharField(null=True)
+    author = db.CharField(null=True)
+    is_audio = db.BooleanField()
+    episode_url = db.CharField(null=True)
+    explicit = db.BooleanField(default=False)
+    published_at = db.DateTimeField(null=True)
+    created_at = db.DateTimeField(default=datetime.utcnow)
 
     class Meta:
         db_table = 'episodes'
 
 
 class Tag(BaseModel):
-    name = CharField(),
-    created_at = DateTimeField(default=datetime.utcnow)
+    name = db.CharField()
+    created_at = db.DateTimeField(default=datetime.utcnow)
 
     class Meta:
         db_table = 'tags'
 
 
 class ShowTag(BaseModel):
-    show_id = ForeignKeyField(Show, related_name='tags')
-    tag_id = ForeignKeyField(Tag, related_name='shows')
-    created_at = DateTimeField(default=datetime.utcnow)
+    show = db.ForeignKeyField(Show, related_name='tags')
+    tag = db.ForeignKeyField(Tag, related_name='shows')
+    created_at = db.DateTimeField(default=datetime.utcnow)
 
     class Meta:
         db_table = 'shows_tags'
 
 
 class EpisodeTag(BaseModel):
-    episode_id = ForeignKeyField(Episode, related_name='tags')
-    tag_id = ForeignKeyField(Tag, related_name='episodes')
-    created_at = DateTimeField(default=datetime.utcnow)
+    episode = db.ForeignKeyField(Episode, related_name='tags')
+    tag = db.ForeignKeyField(Tag, related_name='episodes')
+    created_at = db.DateTimeField(default=datetime.utcnow)
 
     class Meta:
         db_table = 'episodes_tags'
 
 
-def create_tables():
+all_models = [Publisher, Show, Episode, Tag, ShowTag, EpisodeTag]
+
+
+if __name__ == '__main__' and len(sys.argv) == 2:
     database.connect()
-    database.create_tables([Publisher, Show, Episode, Tag, ShowTag, EpisodeTag])
+    if sys.argv[1] == '--create':
+        print('CREATE')
+        database.create_tables(all_models)
+    elif sys.argv[1] == '--drop':
+        print('DROP')
+        database.drop_tables(all_models)
 
-
-import pdb
-pdb.set_trace()
-
-# >>> from datetime import date
 # >>> uncle_bob = Person(name='Bob', birthday=date(1960, 1, 15), is_relative=True)
 # >>> uncle_bob.save() # bob is now stored in the database
 
