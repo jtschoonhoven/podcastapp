@@ -9,16 +9,19 @@ const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const babel = require('gulp-babel');
 const header = require('gulp-header');
+const gutil = require('gulp-util');
 
-gulp.task('default', ['bundle', 'jsx', 'style', 'vendor']);
+gulp.task('default', ['build', 'watch']);
+gulp.task('build', ['bundle', 'jsx', 'style', 'vendor']);
 gulp.task('watch', ['watch:bundle', 'watch:style', 'watch:jsx']);
+
 
 gulp.task('bundle', function() {
     browserify("./app/main.js", {debug: true})  // Debug sourcemaps break ST2.
         .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
         .bundle()
-        .on("error", err => console.trace(err))
-        .pipe(fs.createWriteStream("./public/javascripts/bundle.js"));
+        .pipe(fs.createWriteStream("./public/javascripts/bundle.js"))
+        .on('end', gutil.beep);
 });
 
 gulp.task('watch:bundle', function () {
@@ -29,8 +32,8 @@ gulp.task("jsx", function() {
   return gulp.src("./app/components_jsx/**/*.jsx")
     .pipe(babel({plugins: ['transform-es2015-modules-commonjs', 'transform-react-jsx']}))
     .pipe(header('/**\n * Compiled from JSX. Do not edit by hand.\n */\n'))
-    .on("error", err => console.trace(err))
-    .pipe(gulp.dest("./app/components/"));
+    .pipe(gulp.dest("./app/components/"))
+    .on('end', gutil.beep);
 });
 
 gulp.task('watch:jsx', function() {
