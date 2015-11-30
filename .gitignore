@@ -3,3 +3,6 @@
 npm-debug.log
 .DS_Store
 .eslintcache
+./public/*
+./node_modules/*
+./bower_components/*

@@ -1,4 +1,8 @@
-const Router = require('./router');
+import {render} from "react-dom";
+import createBrowserHistory from 'history/lib/createBrowserHistory';
+import routes from "./components/routes";
 
-new Router();
-Backbone.history.start({pushState: true});
+render(
+    routes(createBrowserHistory({queryKey: false})),
+    document.getElementById('app')
+);

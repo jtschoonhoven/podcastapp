@@ -17,7 +17,7 @@ gulp.task('bundle', function() {
     browserify("./app/main.js", {debug: true})  // Debug sourcemaps break ST2.
         .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
         .bundle()
-        .on("error", err => console.error("Error : " + err.message))
+        .on("error", err => console.trace(err))
         .pipe(fs.createWriteStream("./public/javascripts/bundle.js"));
 });
 
@@ -29,6 +29,7 @@ gulp.task("jsx", function() {
   return gulp.src("./app/components_jsx/**/*.jsx")
     .pipe(babel({plugins: ['transform-es2015-modules-commonjs', 'transform-react-jsx']}))
     .pipe(header('/**\n * Compiled from JSX. Do not edit by hand.\n */\n'))
+    .on("error", err => console.trace(err))
     .pipe(gulp.dest("./app/components/"));
 });
 

@@ -46,8 +46,9 @@ class FetchShows(object):
         """Strict alphanumeric."""
         # TODO
         if type(string) is unicode:
-            return string.decode('utf-8')
-        return string
+            string = string.decode('utf-8')
+        if type(string) is str:
+            return str.lower()
 
     def _sanitize_title(self, string):
         """Alphanum with limited special chars, formatted as title."""
