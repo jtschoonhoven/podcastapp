@@ -8,6 +8,7 @@ const uglify = require('gulp-uglify');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const babel = require('gulp-babel');
+const header = require('gulp-header');
 
 gulp.task('default', ['bundle', 'jsx', 'style', 'vendor']);
 gulp.task('watch', ['watch:bundle', 'watch:style', 'watch:jsx']);
@@ -25,13 +26,14 @@ gulp.task('watch:bundle', function () {
 });
 
 gulp.task("jsx", function() {
-  return gulp.src("./app/components_jsx/**/*.js")
-    .pipe(babel({presets: ['react']}))
+  return gulp.src("./app/components_jsx/**/*.jsx")
+    .pipe(babel({plugins: ['transform-es2015-modules-commonjs', 'transform-react-jsx']}))
+    .pipe(header('/**\n * Compiled from JSX. Do not edit by hand.\n */\n'))
     .pipe(gulp.dest("./app/components/"));
 });
 
 gulp.task('watch:jsx', function() {
-    gulp.watch("./app/components_jsx/**/*.js", ['jsx']);
+    gulp.watch(["./app/components_jsx/**/*.jsx"], ['jsx']);
 });
 
 gulp.task('style', function () {
@@ -47,8 +49,6 @@ gulp.task('watch:style', function () {
 gulp.task('vendor', function(){
     const vendors = [
         './bower_components/jquery/dist/jquery.js',
-        './bower_components/underscore/underscore.js',
-        './bower_components/backbone/backbone.js',
         './bower_comonents/bootstrap/dist/js/bootstrap.js'
     ];
 
