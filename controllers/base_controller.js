@@ -1,3 +1,4 @@
+"use strict";
 const Pg = require('./pg');
 
 class BaseController {

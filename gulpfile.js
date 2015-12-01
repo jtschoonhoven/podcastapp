@@ -12,7 +12,7 @@ const header = require('gulp-header');
 const gutil = require('gulp-util');
 
 gulp.task('default', ['build', 'watch']);
-gulp.task('build', ['bundle', 'jsx', 'style', 'vendor']);
+gulp.task('build', ['jsx', 'bundle', 'style', 'vendor']);
 gulp.task('watch', ['watch:bundle', 'watch:style', 'watch:jsx']);
 
 
