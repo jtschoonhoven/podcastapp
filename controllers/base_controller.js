@@ -1,6 +1,7 @@
 "use strict";
 const Pg = require('./pg');
 
+
 class BaseController {
     constructor(schema, table) {
         this.schema = schema;
@@ -17,11 +18,44 @@ class BaseController {
         return this.pg.fetchAll(sql);
     }
 
+    /**
+     * Return the single record that matches numeric id.
+     * @param {number} id
+     */
     fetchOne(id) {
         const sql = `
             SELECT * FROM ${this.schema}.${this.table}
-            WHERE id = ${id}`;
+            WHERE id = ${id} LIMIT 1`;
         return this.pg.fetchOneRow(sql);
+    }
+
+    /**
+     * Naive method to return rows where given key/value pair exactly matches column/value.
+     * If {where} is numeric, it is assumed to match on the id column.
+     * @param {number | object} where
+     */
+    fetchWhere(where) {
+        if (typeof(where) === 'number') {
+            where = {id: where};
+        }
+
+        const values = [];
+        const conditions = [];
+
+        for (const colname in where) {
+            if (!where.hasOwnProperty(colname)) {
+                continue;
+            }
+            values.push(where[colname]);
+            const cleanCol = colname.replace(/[^a-z0-9_]/gi, '');
+            conditions.push(`${cleanCol} = $${values.length}`);
+        }
+
+        const sql = `
+            SELECT * FROM ${this.schema}.${this.table}
+            WHERE ${conditions.join('\nAND ')}`;
+
+        return this.pg.fetchAll(sql, values);
     }
 
     create(attr) {
