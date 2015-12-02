@@ -13,6 +13,10 @@ export default class Episode extends React.Component {
                     <Link to={'/'}>{this.props.title}</Link>
                 </h3>
                 <p>{this.props.description}</p>
+                <audio>
+                    {'Media not supported by browser'}
+                    <source src={this.props.media_url} type={'audio/mp3'} controls={'controls'} />
+                </audio>
             </div>);
     }
 }
