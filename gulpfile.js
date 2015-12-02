@@ -11,12 +11,11 @@ const babel = require('gulp-babel');
 const header = require('gulp-header');
 const gutil = require('gulp-util');
 
-gulp.task('default', ['build', 'watch']);
-gulp.task('build', ['jsx', 'bundle', 'style', 'vendor']);
+gulp.task('default', ['bundle', 'watch']);
 gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
+gulp.task('build', ['bundle', 'style', 'vendor']);
 
-
-gulp.task('bundle', function() {
+gulp.task('bundle', ['jsx'], function() {
     browserify("./app/main.js", {debug: true})  // Debug sourcemaps break ST2.
         .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
         .bundle()
@@ -25,7 +24,7 @@ gulp.task('bundle', function() {
 });
 
 gulp.task('watch:bundle', function () {
-    gulp.watch(['./app/**/*.js'], ['bundle']);
+    gulp.watch(['./app/**/*.js', '!./app/components/**/*.js'], ['bundle']);
 });
 
 gulp.task("jsx", function() {
@@ -37,7 +36,7 @@ gulp.task("jsx", function() {
 });
 
 gulp.task('watch:jsx', function() {
-    gulp.watch(["./app/components_jsx/**/*.jsx"], ['jsx']);
+    gulp.watch(["./app/components_jsx/**/*.jsx"], ['bundle']);
 });
 
 gulp.task('style', function () {
