@@ -19,10 +19,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const showController = require('./controllers/shows');
+const showsController = require('./controllers/shows');
+const episodesController = require('./controllers/episodes');
+
 app.get('/api/v0/shows', (req, res) => {
-    showController.fetchAll().then(
+    showsController.fetchAll().then(
         shows => { res.send(shows); },
+        err => { res.render('error', {mesage: err.message, error: err}); }
+    );
+});
+
+app.get('/api/v0/shows/:showId/episodes', (req, res) => {
+    episodesController.fetchWhere({show_id: Number(req.params.showId)}).then(
+        episodes => { res.send(episodes); },
         err => { res.render('error', {mesage: err.message, error: err}); }
     );
 });

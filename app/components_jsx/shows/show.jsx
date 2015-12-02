@@ -4,9 +4,12 @@ import {Link} from 'react-router';
 export default class Show extends React.Component {
     render() {
         return (<div className="show">
-            <h2>{this.props.name}</h2>
+            <h2>
+                <Link to={`/shows/${this.props.id}/episodes`}>
+                    {this.props.name}
+                </Link>
+            </h2>
             <p>{this.props.description}</p>
-            <Link to={'/show/' + this.props.id}>{'link'}</Link>
         </div>);
     }
 }

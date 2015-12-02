@@ -13,7 +13,7 @@ const gutil = require('gulp-util');
 
 gulp.task('default', ['build', 'watch']);
 gulp.task('build', ['jsx', 'bundle', 'style', 'vendor']);
-gulp.task('watch', ['watch:bundle', 'watch:style', 'watch:jsx']);
+gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
 
 
 gulp.task('bundle', function() {

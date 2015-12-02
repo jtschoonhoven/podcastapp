@@ -9,13 +9,13 @@ export default class Shows extends React.Component {
     }
 
     componentDidMount() {
-        $.get('/api/v0/shows', function(res) {
+        $.get('/api/v0/shows', res => {
             this.setState({shows: res});
-        }.bind(this));
+        });
     }
 
     render() {
-        const showNodes = this.state.shows.map(show => {
+        const show_list = this.state.shows.map(show => {
             return <Show name={show.name} description={show.description} id={show.id} />;
         });
 
@@ -23,7 +23,7 @@ export default class Shows extends React.Component {
             <div className="shows">
                 <h1>{'Shows'}</h1>
                 <hr />
-                {showNodes}
+                {show_list}
             </div>
         );
     }
