@@ -13,6 +13,10 @@ class BaseController {
         return new Date().toISOString();
     }
 
+    /**
+     * Return all rows in table.
+     * @return {promise} - resolves to array
+     */
     fetchAll() {
         const sql = `SELECT * FROM ${this.schema}.${this.table}`;
         return this.pg.fetchAll(sql);
@@ -21,6 +25,7 @@ class BaseController {
     /**
      * Return the single record that matches numeric id.
      * @param {number} id
+     * @return {promise} - resolves to object literal
      */
     fetchOne(id) {
         const sql = `
@@ -33,6 +38,7 @@ class BaseController {
      * Naive method to return rows where given key/value pair exactly matches column/value.
      * If {where} is numeric, it is assumed to match on the id column.
      * @param {number | object} where
+     * @return {promise} - resolves to array
      */
     fetchWhere(where) {
         if (typeof(where) === 'number') {

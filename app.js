@@ -22,17 +22,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 const showsController = require('./controllers/shows');
 const episodesController = require('./controllers/episodes');
 
+const onFailure = function(res) {
+    return err => res.render('error', {mesage: err.message, error: err});
+};
+
+const onSuccess = function(res) {
+    return data => res.send(data);
+};
+
 app.get('/api/v0/shows', (req, res) => {
     showsController.fetchAll().then(
-        shows => { res.send(shows); },
-        err => { res.render('error', {mesage: err.message, error: err}); }
+        onSuccess(res),
+        onFailure(res)
+    );
+});
+
+app.get('/api/v0/shows/:id', (req, res) => {
+    const showId = Number(req.params.id);
+    showsController.fetchOne(showId).then(
+        onSuccess(res),
+        onFailure(res)
     );
 });
 
 app.get('/api/v0/shows/:showId/episodes', (req, res) => {
     episodesController.fetchWhere({show_id: Number(req.params.showId)}).then(
-        episodes => { res.send(episodes); },
-        err => { res.render('error', {mesage: err.message, error: err}); }
+        onSuccess(res),
+        onFailure(res)
     );
 });
 
