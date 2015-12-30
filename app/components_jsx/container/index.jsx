@@ -13,8 +13,10 @@ export default class Container extends React.Component {
         });
 
         return (
-            <div className="container">
-                {children}
+            <div className="wrapper">
+                <div className="container">
+                    {children}
+                </div>
                 <Player />
             </div>
         );
