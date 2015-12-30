@@ -8,6 +8,8 @@ export default class Container extends React.Component {
     }
 
     render() {
+        const episodeId = this.props.location.query.e;
+        const episodeTime = this.props.location.query.t;
         const children = React.Children.map(this.props.children, child => {
             return child;
         });
@@ -17,7 +19,7 @@ export default class Container extends React.Component {
                 <div className="container">
                     {children}
                 </div>
-                <Player />
+                <Player episodeId={episodeId} episodeTime={episodeTime} />
             </div>
         );
     }

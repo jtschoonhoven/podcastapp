@@ -18,7 +18,7 @@ export default class Player extends React.Component {
                             <span className="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
                         </button>
                         <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
-                            {'Nope — OK'}
+                            {'Nope — ' + this.props.episodeId}
                         </button>
                     </div>
                 </nav>

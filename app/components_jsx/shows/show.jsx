@@ -10,6 +10,7 @@ export default class Show extends React.Component {
                 </Link>
             </h2>
             <p>{this.props.description}</p>
+            <button type="button" className="btn btn-primary btn-sm">{'Play'}</button>
         </div>);
     }
 }
