@@ -11,7 +11,7 @@ const babel = require('gulp-babel');
 const header = require('gulp-header');
 const gutil = require('gulp-util');
 
-gulp.task('default', ['bundle', 'watch']);
+gulp.task('default', ['bundle', 'style', 'watch']);
 gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
 gulp.task('build', ['bundle', 'style', 'vendor']);
 
@@ -46,7 +46,7 @@ gulp.task('style', function () {
 });
 
 gulp.task('watch:style', function () {
-    gulp.watch('./*.scss', ['style']);
+    gulp.watch('./*.sass', ['style']);
 });
 
 gulp.task('vendor', function(){
