@@ -22,7 +22,9 @@ export default class Show extends React.Component {
                 <h1>{this.state.name}</h1>
                 <p>{this.state.description}</p>
                 <hr />
-                <Episodes showId={this.id}/>
+                <Episodes
+                    showId={this.id}
+                    pathname={this.props.location.pathname} />
             </div>
         );
     }

@@ -9,10 +9,13 @@ export default class Episode extends React.Component {
     render() {
         return (
             <div className="episode">
-                <h3>
-                    <Link to={'/'}>{this.props.title}</Link>
-                </h3>
+                <h4>{this.props.title}</h4>
                 <p>{this.props.description}</p>
+                <Link className="btn btn-primary btn-sm"
+                    to={this.props.pathname}
+                    query={{s: this.props.showId, e: this.props.id}}>
+                    {'Play'}
+                </Link>
             </div>);
     }
 }

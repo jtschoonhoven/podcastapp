@@ -2,11 +2,32 @@ import React from 'react';
 import Player from './player';
 
 export default class Container extends React.Component {
-    render() {
-        const showId = this.props.location.query.s;
-        const episodeId = this.props.location.query.e;
-        const episodeTime = this.props.location.query.t;
+    constructor(props) {
+        super(props);
+        this.state = {
+            episode: {
+                id: this.props.location.query.e,
+                show_id: this.props.location.query.s
+            }
+        };
+        this.getEpisode();
+    }
 
+    getEpisode(showId, episodeId) {
+        if (showId && episodeId) {
+            $.get(`/api/v0/shows/${showId}/episodes/${episodeId}`, res => {
+                this.setState({episode: res});
+            });
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const showId = nextProps.location.query.s;
+        const episodeId = nextProps.location.query.e;
+        this.getEpisode(showId, episodeId);
+    }
+
+    render() {
         const children = React.Children.map(this.props.children, child => {
             return child;
         });
@@ -17,9 +38,9 @@ export default class Container extends React.Component {
                     {children}
                 </div>
                 <Player
-                    showId={showId}
-                    episodeId={episodeId}
-                    episodeTime={episodeTime}
+                    showId={this.state.episode.show_id}
+                    episodeId={this.state.episode.id}
+                    title={this.state.episode.title}
                 />
             </div>
         );

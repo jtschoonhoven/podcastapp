@@ -13,7 +13,7 @@ const onSuccess = function(res) {
 };
 
 
-router.get('/shows/', (req, res) => {
+router.get('/shows', (req, res) => {
     showsController.fetchAll().then(
         onSuccess(res),
         onFailure(res)
@@ -43,7 +43,7 @@ router.get('/shows/:showId/episodes/latest', (req, res) => {
 });
 
 router.get('/shows/:showId/episodes/:episodeId', (req, res) => {
-    episodesController.fetchOne({episode_id: Number(req.params.episodeId)}).then(
+    episodesController.fetchOne(Number(req.params.episodeId)).then(
         onSuccess(res),
         onFailure(res)
     );

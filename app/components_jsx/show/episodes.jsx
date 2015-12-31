@@ -18,7 +18,13 @@ export default class Episodes extends React.Component {
     render() {
         const episode_list = this.state.episodes.map(episode => {
             return (
-                <Episode title={episode.title} description={episode.description} id={episode.id} media_url={episode.media_url} />
+                <Episode
+                    title={episode.title}
+                    description={episode.description}
+                    id={episode.id}
+                    showId={this.showId}
+                    media_url={episode.media_url}
+                    pathname={this.props.pathname} />
             );
         });
 
