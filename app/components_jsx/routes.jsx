@@ -10,7 +10,7 @@ export default (history) => {
             <Route path="/" component={Container}>
                 <IndexRoute components={Shows} />
                 <Route path="shows" component={Shows} />
-                <Route path="shows/:id" component={Show} />
+                <Route path="shows/:id(/:showName)" component={Show} />
             </Route>
         </Router>
     );

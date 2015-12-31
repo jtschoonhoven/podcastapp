@@ -4,7 +4,6 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
 const app = express();
 
 // view engine setup
@@ -19,41 +18,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const showsController = require('./controllers/shows');
-const episodesController = require('./controllers/episodes');
+const api = require('./routes/api');
+app.use('/api/v0', api);
 
-const onFailure = function(res) {
-    return err => res.render('error', {mesage: err.message, error: err});
+const router = require('./routes/router');
+app.use(router);
+
+global.$ = {
+    get: (url, cb) => {
+        const req = {url: url};
+        const res = {
+            send: data => cb(data),
+            status: () => {
+                return {send: data => cb(data)};
+            }
+        };
+        return router(req, res);
+    }
 };
-
-const onSuccess = function(res) {
-    return data => res.send(data);
-};
-
-app.get('/api/v0/shows', (req, res) => {
-    showsController.fetchAll().then(
-        onSuccess(res),
-        onFailure(res)
-    );
-});
-
-app.get('/api/v0/shows/:id', (req, res) => {
-    const showId = Number(req.params.id);
-    showsController.fetchOne(showId).then(
-        onSuccess(res),
-        onFailure(res)
-    );
-});
-
-app.get('/api/v0/shows/:showId/episodes', (req, res) => {
-    episodesController.fetchWhere({show_id: Number(req.params.showId)}).then(
-        onSuccess(res),
-        onFailure(res)
-    );
-});
-
-const router = require('./app/components/router');
-app.use(router.default);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -67,11 +49,11 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res) {
-      res.status(err.status || 500);
-      res.render('error', {
-          message: err.message,
-          error: err
+    app.use(function(err, req, res) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
       });
   });
 }
@@ -79,10 +61,10 @@ if (app.get('env') === 'development') {
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
   });
 });
 

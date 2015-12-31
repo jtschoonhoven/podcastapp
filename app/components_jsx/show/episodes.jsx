@@ -6,9 +6,10 @@ export default class Episodes extends React.Component {
         super(props);
         this.showId = props.showId;
         this.state = {episodes: []};
+        this.getEpisodes();
     }
 
-    componentDidMount() {
+    getEpisodes() {
         $.get(`/api/v0/shows/${this.showId}/episodes`, res => {
             this.setState({episodes: res});
         });

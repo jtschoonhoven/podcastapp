@@ -64,6 +64,38 @@ class BaseController {
         return this.pg.fetchAll(sql, values);
     }
 
+    /**
+     * Naive method to return most recent row where key/value pair matches column/value.
+     * Most recent is determined by highest id value, not created_at.
+     * @param {object | undefined} where
+     * @return {promise} - resolves to object literal
+     */
+    fetchLatest(where) {
+        where = where || {};
+        const values = [];
+        const conditions = [];
+
+        for (const colname in where) {
+            if (!where.hasOwnProperty(colname)) {
+                continue;
+            }
+            values.push(where[colname]);
+            const cleanCol = colname.replace(/[^a-z0-9_]/gi, '');
+            conditions.push(`${cleanCol} = $${values.length}`);
+        }
+
+        let sqlConditions = '';
+        if (conditions.length) {
+            sqlConditions = `\nWHERE ${conditions.join('\nAND ')}`;
+        }
+
+        const sql = `
+            SELECT * FROM ${this.schema}.${this.table} ${sqlConditions}
+            ORDER BY id DESC LIMIT 1`;
+
+        return this.pg.fetchOneRow(sql, values);
+    }
+
     create(attr) {
         attr.created_at = this._now();
 
