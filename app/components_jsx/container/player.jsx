@@ -23,6 +23,7 @@ export default class Player extends React.Component {
     }
 
     render() {
+        // TODO: break out player controls into sub components
         return (
             <div className="player">
                 <nav className="navbar navbar-default">
@@ -40,6 +41,21 @@ export default class Player extends React.Component {
                         <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
                             {this.props.title}
                         </button>
+                        <div className="playback">
+                            <p className="navbar-text">
+                                <div className="buffered">
+                                  <span id="buffered-amount"></span>
+                                </div>
+                                <div className="progress">
+                                  <span id="progress-amount"></span>
+                                </div>
+                            </p>
+                        </div>
+                        <form id="volume" className="navbar-form navbar-left" role="playback">
+                            <p className="navbar-text">
+                              <input type="range" min="0" max="1000" step="1" />
+                            </p>
+                        </form>
                     </div>
                 </nav>
             </div>
