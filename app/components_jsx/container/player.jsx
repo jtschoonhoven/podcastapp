@@ -28,13 +28,13 @@ export default class Player extends React.Component {
                 <nav className="navbar navbar-default">
                     <div className="container">
                         <audio id="media" style={{display: "none"}} controls autoPlay src={`/api/v0/media/${this.props.episodeId}`} />
-                        <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left" onClick={this.state.media.play}>
+                        <button id="play" type="button" className="btn btn-link btn-lg navbar-btn navbar-left" onClick={this.state.media.play}>
                             <span className="glyphicon glyphicon-play" aria-hidden="true"></span>
                         </button>
-                        <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left" onClick={this.state.media.pause}>
+                        <button id="pause" type="button" className="btn btn-link btn-lg navbar-btn navbar-left" onClick={this.state.media.pause}>
                             <span className="glyphicon glyphicon-pause" aria-hidden="true"></span>
                         </button>
-                        <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
+                        <button id="skip" type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
                             <span className="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
                         </button>
                         <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left">

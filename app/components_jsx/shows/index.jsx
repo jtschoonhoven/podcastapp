@@ -15,15 +15,15 @@ export default class Shows extends React.Component {
     }
 
     render() {
-        const show_list = this.state.shows.map(show => {
-            return <Show name={show.name} description={show.description} id={show.id} />;
+        const showList = this.state.shows.map(show => {
+            return <Show {...show}/>;
         });
 
         return (
             <div className="shows">
-                <h1>{'Shows'}</h1>
-                <hr />
-                {show_list}
+                <div className="show row">
+                    {showList}
+                </div>
             </div>
         );
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Player from './player';
+import Navbar from './navbar';
 
 export default class Container extends React.Component {
     constructor(props) {
@@ -34,7 +35,8 @@ export default class Container extends React.Component {
 
         return (
             <div className="wrapper">
-                <div className="container">
+                <Navbar />
+                <div className="container-fluid">
                     {children}
                 </div>
                 <Player
@@ -42,6 +44,7 @@ export default class Container extends React.Component {
                     episodeId={this.state.episode.id}
                     title={this.state.episode.title}
                 />
+                <div className="row pad"></div>
             </div>
         );
     }
