@@ -16,6 +16,7 @@ export default class Player extends React.Component {
                         <button type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
                             {this.props.title}
                         </button>
+                        <audio controls src="/api/v0/media/1" />
                     </div>
                 </nav>
             </div>

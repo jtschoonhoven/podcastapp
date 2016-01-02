@@ -23,7 +23,7 @@ class BaseController {
     }
 
     /**
-     * Return the single record that matches numeric id.
+     * Return the single row that matches numeric id.
      * @param {number} id
      * @return {promise} - resolves to object literal
      */
