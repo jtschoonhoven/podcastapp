@@ -1,5 +1,5 @@
 import React from 'react';
-import Player from './player';
+import Player from '../player';
 import Navbar from './navbar';
 
 export default class Container extends React.Component {
