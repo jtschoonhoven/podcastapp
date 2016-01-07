@@ -16,7 +16,7 @@ gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
 gulp.task('build', ['bundle', 'style', 'vendor']);
 
 gulp.task('bundle', ['jsx'], function() {
-    browserify("./app/main.js", {debug: true})  // Debug sourcemaps break ST2.
+    browserify("./app/main.js", {debug: true})
         .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
         .bundle()
         .pipe(fs.createWriteStream("./public/javascripts/bundle.js"))
