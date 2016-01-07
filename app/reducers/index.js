@@ -6,5 +6,6 @@ const showsReducer = require('./shows');
 
 module.exports = combineReducers({
     playbackReducer,
-    episodesReducer
+    episodesReducer,
+    showsReducer
 });

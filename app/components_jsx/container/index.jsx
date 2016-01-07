@@ -14,18 +14,18 @@ export default class Container extends React.Component {
         this.getEpisode();
     }
 
+    componentDidMount() {
+        const showId = this.props.location.query.s;
+        const episodeId = this.props.location.query.e;
+        this.getEpisode(showId, episodeId);
+    }
+
     getEpisode(showId, episodeId) {
         if (showId && episodeId) {
             $.get(`/api/v0/shows/${showId}/episodes/${episodeId}`, res => {
                 this.setState({episode: res});
             });
         }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const showId = nextProps.location.query.s;
-        const episodeId = nextProps.location.query.e;
-        this.getEpisode(showId, episodeId);
     }
 
     render() {

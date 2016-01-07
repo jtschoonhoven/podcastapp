@@ -11,10 +11,16 @@ const babel = require('gulp-babel');
 const header = require('gulp-header');
 const gutil = require('gulp-util');
 
-gulp.task('default', ['bundle', 'style', 'watch']);
-gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
+/**
+* Top level gulp commands to build and watch.
+*/
+gulp.task('default', ['build', 'watch']);
 gulp.task('build', ['bundle', 'style', 'vendor']);
+gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
 
+/**
+* Browserify and bundle.
+*/
 gulp.task('bundle', ['jsx'], function() {
     browserify("./app/main.js", {debug: true})
         .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
@@ -27,6 +33,9 @@ gulp.task('watch:bundle', function () {
     gulp.watch(['./app/**/*.js', '!./app/components/**/*.js'], ['bundle']);
 });
 
+/**
+* Compile JSX in app/components_jsx and put to app/components.
+*/
 gulp.task("jsx", function() {
   return gulp.src("./app/components_jsx/**/*.jsx")
     .pipe(babel({plugins: ['transform-es2015-modules-commonjs', 'transform-react-jsx']}))
@@ -39,6 +48,10 @@ gulp.task('watch:jsx', function() {
     gulp.watch(["./app/components_jsx/**/*.jsx"], ['bundle']);
 });
 
+
+/**
+* Compile SASS and put to public/stylesheets.
+*/
 gulp.task('style', function () {
     gulp.src('./style.sass')
         .pipe(sass().on('error', sass.logError))
@@ -49,17 +62,10 @@ gulp.task('watch:style', function () {
     gulp.watch('./*.sass', ['style']);
 });
 
+/**
+* Bundle styles and fonts from 3rd parties.
+*/
 gulp.task('vendor', function(){
-    const vendors = [
-        './bower_components/jquery/dist/jquery.js',
-        './bower_comonents/bootstrap/dist/js/bootstrap.js'
-    ];
-
-    gulp.src(vendors)
-        .pipe(uglify())
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest("./public/javascripts/"));
-
     gulp.src('./bower_components/bootstrap/dist/css/bootstrap.min.css')
         .pipe(gulp.dest('./public/stylesheets/'));
 
