@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "nodemon www --debug --ext js,jsx --ignore node_modules --ignore bower_components --ignore public --ignore app/components",
+    "start": "sudo nodemon www --debug --ext js,jsx --ignore node_modules --ignore bower_components --ignore public --ignore app/components",
     "lint": "./node_modules/eslint/bin/eslint.js --fix --cache --ext .js ./app.js ./app/ ./routes/ ./bin/ || true"
   },
   "dependencies": {

@@ -3,6 +3,7 @@
         "ENV": "PODCAST_ENV"
     },
     "development": {
+        "BASE_URL": "http://localhost",
         "PG_CREDENTIALS": {
             "user": "jschoonhoven",
             "database": "public",

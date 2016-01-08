@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react';
 import {Link} from 'react-router';
-import Show from "./show";
+import Show from './show';
+import ajax from '../../../util/ajax';
 
 export default class Shows extends React.Component {
     constructor(props) {
@@ -9,8 +10,12 @@ export default class Shows extends React.Component {
     }
 
     componentDidMount() {
-        $.get('/api/v0/shows', res => {
-            this.setState({shows: res});
+        ajax({url: '/api/v0/shows', json: true, method: 'get'}, (err, res, data) => {
+            if (!err && res.statusCode == 200) {
+                this.setState({shows: data});
+            } else {
+                console.error('TODO: handle this err', err);
+            }
         });
     }
 

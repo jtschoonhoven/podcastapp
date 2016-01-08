@@ -10,8 +10,12 @@ export default class Episodes extends React.Component {
     }
 
     getEpisodes() {
-        $.get(`/api/v0/shows/${this.showId}/episodes`, res => {
-            this.setState({episodes: res});
+        ajax(`/api/v0/shows/${this.showId}/episodes`, (err, res, data) => {
+            if (!err && res.statusCode == 200) {
+                this.setState({episodes: data});
+            } else {
+                console.error('TODO: handle this err');
+            }
         });
     }
 

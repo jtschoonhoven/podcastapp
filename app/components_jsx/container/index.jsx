@@ -1,6 +1,7 @@
 import React from 'react';
 import Player from '../player';
 import Navbar from './navbar';
+import ajax from '../../../util/ajax';
 
 export default class Container extends React.Component {
     constructor(props) {
@@ -22,8 +23,12 @@ export default class Container extends React.Component {
 
     getEpisode(showId, episodeId) {
         if (showId && episodeId) {
-            $.get(`/api/v0/shows/${showId}/episodes/${episodeId}`, res => {
-                this.setState({episode: res});
+            ajax(`/api/v0/shows/${showId}/episodes/${episodeId}`, (err, res, data) => {
+                if (!err && res.statusCode == 200) {
+                    this.setState({episode: data});
+                } else {
+                    console.error('TODO: handle this err');
+                }
             });
         }
     }
