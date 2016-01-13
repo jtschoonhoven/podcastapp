@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
-import Buttons from './buttons';
+import Play from './play';
 import Info from './info';
 import Progress from './progress';
 import Volume from './volume';
@@ -32,7 +32,7 @@ export default class Player extends React.Component {
                 <nav className="navbar navbar-default">
                     <div className="container">
                         <audio id="media" style={{display: "none"}} controls autoPlay src={`/api/v0/media/${this.props.episodeId}`} />
-                        <Buttons />
+                        <Play />
                         <Info title={this.props.title} />
                         <Progress />
                         <Volume />

@@ -1,6 +1,10 @@
 import React from 'react';
+import {actions} from '../../reducers/playback';
 
-export default class Buttons extends React.Component {
+export default class Play extends React.Component {
+    handleClick() {
+    }
+
     render() {
         return (
             <div className="buttons">
@@ -9,9 +13,6 @@ export default class Buttons extends React.Component {
                 </button>
                 <button id="pause" type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
                     <span className="glyphicon glyphicon-pause" aria-hidden="true"></span>
-                </button>
-                <button id="skip" type="button" className="btn btn-link btn-lg navbar-btn navbar-left">
-                    <span className="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
                 </button>
             </div>
         );

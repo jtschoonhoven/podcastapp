@@ -9,9 +9,10 @@ const initialState = {
 };
 
 
-module.exports = (state, action) => {
+module.exports.reducer = function(state, action) {
     state = state || initialState;
     let update = {};
+    console.log(action.type);
 
     switch (action.type) {
         case 'PLAYBACK_SET_EPISODE_ID':
@@ -29,6 +30,15 @@ module.exports = (state, action) => {
         case 'PLAYBACK_SET_BUFFERED':
             update = {buffered: action.value};
             break;
+        default:
+            console.warn(`Action ${action.type} not recognized.`);
     }
     return Object.assign({}, state, update);
+};
+
+
+module.exports.actions = function(dispatch) {
+    return {
+        PLAYBACK_TOGGLE: () => dispatch({type: 'PLAYBACK_TOGGLE'})
+    };
 };

@@ -1,8 +1,13 @@
+"use strict";
 const React = require('react');
 const renderToString = require('react-dom/server').renderToString;
 const match = require('react-router').match;
 const RoutingContext = require('react-router').RoutingContext;
+const Provider = require('react-redux').Provider;
+const createStore = require('redux').createStore;
 const routes = require('../app/components/routes').default;
+const reducers = require('../app/reducers').reducers;
+
 
 module.exports = (req, res, next) => {
     match({ routes: routes(), location: req.url }, (error, redirectLocation, renderProps) => {
@@ -11,10 +16,18 @@ module.exports = (req, res, next) => {
         } else if (redirectLocation) {
             res.redirect(302, redirectLocation.pathname + redirectLocation.search);
         } else if (renderProps) {
-            const app = renderToString(React.createElement(RoutingContext, renderProps));
-            res.status(200).render('index', {title: 'Express', app});
+            const app = renderApp(renderProps);
+            res.status(200).render('index', {app});
         } else {
             res.status(404).send('Not found');
         }
     });
+};
+
+
+const renderApp = function(renderProps) {
+    const store = createStore(reducers);
+    const Route = React.createElement(RoutingContext, renderProps);
+    const App = React.createElement(Provider, {store}, Route);
+    return renderToString(App);
 };

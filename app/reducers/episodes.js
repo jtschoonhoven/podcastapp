@@ -1,12 +1,12 @@
 "use strict";
 
 const initialState = {
-    collection: [],
-    featured: []
+    isLoading: true,
+    collection: []
 };
 
 
-module.exports = (state, action) => {
+module.exports.reducer = function(state, action) {
     state = state || initialState;
     let update = {};
 
@@ -16,4 +16,12 @@ module.exports = (state, action) => {
             break;
     }
     return Object.assign({}, state, update);
+};
+
+
+module.exports.actions = function(dispatch) {
+    const action = (type, body) => dispatch(Object.assign({type}, body || {}));
+    return {
+        PLAYBACK_TOGGLE: () => action('PLAYBACK_TOGGLE')
+    };
 };

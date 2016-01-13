@@ -1,5 +1,6 @@
 import React from "react";
 import Episode from "./episode";
+import ajax from '../../../util/ajax';
 
 export default class Episodes extends React.Component {
     constructor(props) {

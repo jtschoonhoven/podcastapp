@@ -1,5 +1,4 @@
 "use strict";
-
 const gulp = require('gulp');
 const fs = require("fs");
 const browserify = require("browserify");
@@ -22,30 +21,42 @@ gulp.task('watch', ['watch:jsx', 'watch:bundle', 'watch:style']);
 * Browserify and bundle.
 */
 gulp.task('bundle', ['jsx'], function() {
+    const stream = fs.createWriteStream("./public/javascripts/bundle.js");
     browserify("./app/main.js", {debug: true})
-        .transform(babelify.configure({nonStandard: true, compact: false, sourceMaps: true}))  // JSX & Flow are nonStandard.
+        .transform(babelify.configure({
+            nonStandard: true,
+            compact: false,
+            comments: false,
+            sourceMaps: true
+        }))
         .bundle()
-        .pipe(fs.createWriteStream("./public/javascripts/bundle.js"))
-        .on('end', gutil.beep);
+        .pipe(stream)
+        .on('end', () => {
+            stream.end();
+            gutil.beep();
+        });
 });
 
 gulp.task('watch:bundle', function () {
-    gulp.watch(['./app/**/*.js', '!./app/components/**/*.js'], ['bundle']);
+    gulp.watch([
+        './app/**/*.js',
+        '!./app/components/**/*.js',
+        '!./app/components_jsx/**/*.js'
+    ], ['bundle']);
 });
 
 /**
 * Compile JSX in app/components_jsx and put to app/components.
 */
 gulp.task("jsx", function() {
-  return gulp.src("./app/components_jsx/**/*.jsx")
+  return gulp.src("./app/components_jsx/**/*.js")
     .pipe(babel({plugins: ['transform-es2015-modules-commonjs', 'transform-react-jsx']}))
     .pipe(header('/**\n * Compiled from JSX. Do not edit by hand.\n */\n'))
-    .pipe(gulp.dest("./app/components/"))
-    .on('end', gutil.beep);
+    .pipe(gulp.dest("./app/components/"));
 });
 
 gulp.task('watch:jsx', function() {
-    gulp.watch(["./app/components_jsx/**/*.jsx"], ['bundle']);
+    gulp.watch(["./app/components_jsx/**/*.js"], ['bundle']);
 });
 
 
@@ -59,7 +70,7 @@ gulp.task('style', function () {
 });
 
 gulp.task('watch:style', function () {
-    gulp.watch('./*.sass', ['style']);
+    gulp.watch('.style.sass', ['style']);
 });
 
 /**
