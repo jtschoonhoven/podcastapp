@@ -7,7 +7,7 @@ const Provider = require('react-redux').Provider;
 const createStore = require('redux').createStore;
 const combineReducers = require('redux').combineReducers;
 const routes = require('../app/components/routes').default;
-const reducers = require('../app/reducers').reducers;
+const reducers = require('../app/store').reducers;
 
 
 module.exports = (req, res, next) => {

@@ -36,8 +36,6 @@ module.exports.reducer = function(state, action) {
 };
 
 
-module.exports.actions = function(dispatch) {
-    return {
-        PLAYBACK_TOGGLE: () => dispatch({type: 'PLAYBACK_TOGGLE'})
-    };
+module.exports.actions = {
+    PLAYBACK_TOGGLE: () => ({type: 'PLAYBACK_TOGGLE'})
 };

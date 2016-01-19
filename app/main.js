@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 import routes from "./components/routes";
-import { reducers } from './reducers';
+import { reducers } from './store';
 
 
 const reducer = combineReducers(Object.assign({routing: routeReducer}, reducers));

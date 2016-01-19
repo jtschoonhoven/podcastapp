@@ -1,5 +1,4 @@
 import React from 'react';
-import {actions} from '../../reducers/playback';
 
 export default class Play extends React.Component {
     handleClick() {

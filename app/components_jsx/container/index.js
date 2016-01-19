@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Player from '../player';
 import Navbar from './navbar';
+import { getActionCreators } from '../../store';
 import ajax from '../../../util/ajax';
 
 
@@ -10,7 +11,7 @@ class Container extends React.Component {
     componentDidMount() {
         const showId = this.props.location.query.s;
         const episodeId = this.props.location.query.e;
-        this.props.dispatch({type: 'PLAYBACK_TOGGLE'});
+        // this.props.dispatch({type: 'PLAYBACK_TOGGLE'});
         // this.getEpisode(showId, episodeId);
     }
 
@@ -56,4 +57,8 @@ Container.propTypes = {
 };
 
 
-export default connect(state => state)(Container);
+const selector = state => state;
+const actionCreators = getActionCreators;
+export default connect(selector, actionCreators)(Container);
+
+
