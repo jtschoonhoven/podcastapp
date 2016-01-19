@@ -1,8 +1,8 @@
 import React from 'react';
 import {render} from 'react-dom';
-import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { syncReduxAndRouter, routeReducer } from 'redux-simple-router';
 import routes from "./components/routes";
 import { reducers } from './reducers';

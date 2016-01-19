@@ -10,6 +10,7 @@ class Container extends React.Component {
     componentDidMount() {
         const showId = this.props.location.query.s;
         const episodeId = this.props.location.query.e;
+        this.props.dispatch({type: 'PLAYBACK_TOGGLE'});
         // this.getEpisode(showId, episodeId);
     }
 
@@ -26,7 +27,6 @@ class Container extends React.Component {
     }
 
     render() {
-        this.props.dispatch({type: 'PLAYBACK_TOGGLE'});
         if (typeof window !== 'undefined') {window.test = this;}
         const children = React.Children.map(this.props.children, child => {
             return child;
@@ -56,4 +56,4 @@ Container.propTypes = {
 };
 
 
-export default connect()(Container);
+export default connect(state => state)(Container);

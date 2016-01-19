@@ -11,7 +11,7 @@ module.exports.reducer = function(state, action) {
     let update = {};
 
     switch (action.type) {
-        case 'TODO':
+        case 'PLAYBACK_TOGGLE':
             update = {};
             break;
     }

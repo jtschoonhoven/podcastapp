@@ -5,6 +5,7 @@ const match = require('react-router').match;
 const RoutingContext = require('react-router').RoutingContext;
 const Provider = require('react-redux').Provider;
 const createStore = require('redux').createStore;
+const combineReducers = require('redux').combineReducers;
 const routes = require('../app/components/routes').default;
 const reducers = require('../app/reducers').reducers;
 
@@ -26,7 +27,8 @@ module.exports = (req, res, next) => {
 
 
 const renderApp = function(renderProps) {
-    const store = createStore(reducers);
+    const reducer = combineReducers(reducers);
+    const store = createStore(reducer);
     const Route = React.createElement(RoutingContext, renderProps);
     const App = React.createElement(Provider, {store}, Route);
     return renderToString(App);
