@@ -19,6 +19,6 @@ module.exports.reducer = function(state, action) {
 };
 
 
-module.exports.actions = {
+module.exports.actionCreators = {
     PLAYBACK_TOGGLE: () => ({type: 'PLAYBACK_TOGGLE'})
 };

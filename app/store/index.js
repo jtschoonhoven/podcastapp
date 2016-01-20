@@ -12,10 +12,10 @@ module.exports.reducers = {
 };
 
 
-const actions = {
-    playback: playback.actions,
-    episodes: episodes.actions,
-    shows: shows.actions
+const actionCreators = {
+    playback: playback.actionCreators,
+    episodes: episodes.actionCreators,
+    shows: shows.actionCreators
 };
 
 
@@ -23,8 +23,8 @@ const actions = {
  * Return namespaced object of action creators.
  */
 module.exports.getActionCreators = dispatch => {
-    for (const action in actions) {
-        actions[action] = bindActionCreators(actions[action], dispatch);
+    for (const a in actionCreators) {
+        actionCreators[a] = bindActionCreators(actionCreators[a], dispatch);
     }
-    return {actions};
+    return {actionCreators};
 };

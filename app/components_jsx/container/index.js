@@ -39,11 +39,7 @@ class Container extends React.Component {
                 <div className="container-fluid">
                     {children}
                 </div>
-                <Player
-                    // showId={this.state.episode.show_id}
-                    // episodeId={this.state.episode.id}
-                    // title={this.state.episode.title}
-                />
+                <Player {...this.props.playback} {...this.props.actionCreators.playback} />
                 <div className="row pad"></div>
             </div>
         );
