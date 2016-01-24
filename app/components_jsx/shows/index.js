@@ -1,31 +1,37 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {Link} from 'react-router';
 import Show from './show';
 import ajax from '../../../util/ajax';
 
 export default class Shows extends React.Component {
     componentDidMount() {
-        // ajax({url: '/api/v0/shows', json: true, method: 'get'}, (err, res, data) => {
-        //     if (!err && res.statusCode == 200) {
-        //         this.setState({shows: data});
-        //     } else {
-        //         console.error('TODO: handle this err', err);
-        //     }
-        // });
+        this.props.actionCreators.shows.SHOWS_FETCH('/api/v0/shows');
+        ajax('/api/v0/shows', (err, res, data) => {
+            if (!err && res.statusCode == 200) {
+                this.props.actionCreators.shows.SHOWS_FETCH_SUCCESS(data);
+            } else {
+                this.props.actionCreators.shows.SHOWS_FETCH_FAILURE(err);
+            }
+        });
     }
 
     render() {
-        // const showList = this.state.shows.map(show => {
-        //     return <Show {...show}/>;
-        // });
+        const showList = this.props.shows.collection.map(showProps => {
+            return <Show {...showProps}/>;
+        });
 
         return (
             <div className="shows">
                 <div className="show row">
-                    <div className="deleteme" />
+                    {showList}
                 </div>
             </div>
         );
     }
 }
-// {showList}
+
+
+Shows.propTypes = {
+    actionCreators: PropTypes.object,
+    shows: PropTypes.object
+};

@@ -29,8 +29,6 @@ module.exports.reducer = function(state, action) {
         case 'PLAYBACK_SET_BUFFERED':
             update = {buffered: action.value};
             break;
-        default:
-            console.warn(`Action ${action.type} not recognized.`);
     }
     return Object.assign({}, state, update);
 };
