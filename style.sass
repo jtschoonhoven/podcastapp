@@ -5,24 +5,20 @@ html, body
 html
     padding-bottom: 50px
 
-form#volume
-    float: none!important
-    overflow: hidden
-    width: 300px
-
-form#volume > *
-    width: 300px
-
 .show
     position: relative
 
     .thumbnail
         height: 480px
 
-    .buttons
+    .btn-group
         position: absolute
         bottom: 30px
         margin: 5px
+        width: 100%
+
+    .btn
+        width: 75%
 
 #app
     height: 100%
@@ -41,33 +37,17 @@ form#volume > *
             height: 60px
             width: 100%
 
-            button
-                margin-right: 6px
+            #volume
+                top: 15px
+                float: none!important
+                overflow: hidden
+
+            #progress
+                margin: 0
+                padding: 0
+                top: 20px
+
 
 div.playback
     float: none!important
     overflow: hidden
-
-    .buffered
-        height: 20px
-        position: relative
-        background: #555
-        width: 300px
-
-    #buffered-amount
-        display: block
-        height: 100%
-        background-color: #777
-        width: 0
-
-    .progress
-        margin-top: -20px
-        height: 20px
-        position: relative
-        width: 300px
-
-    #progress-amount
-        display: block
-        height: 100%
-        background-color: #595
-        width: 0

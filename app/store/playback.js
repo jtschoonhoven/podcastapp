@@ -3,9 +3,14 @@
 const initialState = {
     episodeId: null,
     playing: false,
+    fetching: false,
+    length: 0,
     progress: 0,
     volume: 100,
-    buffered: 0
+    buffered: 0,
+    episode: {},
+    fetch_err: false,
+    fetch_msg: null
 };
 
 
@@ -14,8 +19,15 @@ module.exports.reducer = function(state, action) {
     let update = {};
 
     switch (action.type) {
-        case 'PLAYBACK_SET_EPISODE_ID':
-            update = {episodeId: state.value};
+        case 'PLAYBACK_FETCH':
+            update = {fetching: true};
+            break;
+        case 'PLAYBACK_FETCH_SUCCESS':
+            update = {fetching: false, fetch_msg: null, fetch_err: false, episode: action.value};
+            break;
+        case 'PLAYBACK_FETCH_FAILURE':
+            const fetch_msg = action.fetch_msg || 'Failed to load episode.';
+            update = {fetching: false, fetch_err: true, fetch_msg};
             break;
         case 'PLAYBACK_TOGGLE':
             update = {playing: !state.playing};
@@ -35,5 +47,9 @@ module.exports.reducer = function(state, action) {
 
 
 module.exports.actionCreators = {
-    PLAYBACK_TOGGLE: () => ({type: 'PLAYBACK_TOGGLE'})
+    PLAYBACK_TOGGLE: () => ({type: 'PLAYBACK_TOGGLE'}),
+    PLAYBACK_SET_VOLUME: (vol) => ({type: 'PLAYBACK_SET_VOLUME', value: vol}),
+    PLAYBACK_FETCH: () => ({type: 'PLAYBACK_FETCH'}),
+    PLAYBACK_FETCH_SUCCESS: (episode) => ({type: 'PLAYBACK_FETCH_SUCCESS', value: episode}),
+    SHOWS_FETCH_FAILURE: (fetch_msg) => ({type: 'SHOWS_FETCH_FAILURE', fetch_msg})
 };

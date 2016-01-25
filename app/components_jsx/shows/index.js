@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import {Link} from 'react-router';
 import Show from './show';
 import ajax from '../../../util/ajax';
 

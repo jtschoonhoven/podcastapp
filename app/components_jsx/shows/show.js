@@ -44,7 +44,7 @@ export default class Show extends React.Component {
     render() {
         const showUrl = `/shows/${this.props.id}/${this.urlify(this.props.name)}`;
         return (
-            <div className="show col-xs-12 col-sm-4 col-md-3">
+            <div className="show col-xs-6 col-sm-3 col-md-3 col-lg-2 col-xl-1">
                 <div className="thumbnail">
                     <link to={showUrl}>
                         <img src={this.props.image_url} alt="this.props.name" />
@@ -57,12 +57,9 @@ export default class Show extends React.Component {
                         <p>{this.limitTextLength(this.props.description)}</p>
                     </div>
 
-                    <div className="buttons btn-group" role="group">
-                        <Link className="btn btn-primary btn-sm" to={`?s=${this.props.id}&e=latest`}>
-                            {'Play latest'}
-                        </Link>
+                    <div className="btn-group" role="group">
                         <Link className="btn btn-default btn-sm" to={showUrl}>
-                            {'Brows episodes'}
+                            {'Browse episodes'}
                         </Link>
                     </div>
                 </div>
