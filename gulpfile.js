@@ -127,7 +127,7 @@ gulp.task('style', function () {
 });
 
 gulp.task('watch:style', function () {
-    gulp.watch('.style.sass', ['style']);
+    gulp.watch('./style.sass', ['style']);
 });
 
 /**

@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import Show from './show';
 import ajax from '../../../util/ajax';
 
+
 export default class Shows extends React.Component {
     componentDidMount() {
         this.props.actionCreators.shows.SHOWS_FETCH('/api/v0/shows');
@@ -22,7 +23,7 @@ export default class Shows extends React.Component {
 
         return (
             <div className="shows">
-                <div className="show row">
+                <div className="show-row row">
                     {showList}
                 </div>
             </div>

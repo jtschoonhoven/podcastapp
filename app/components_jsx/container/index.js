@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Player from '../player';
 import Navbar from './navbar';
 import { getActionCreators } from '../../store';
-import ajax from '../../../util/ajax';
 
 
 class Container extends React.Component {
