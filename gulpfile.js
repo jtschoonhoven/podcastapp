@@ -3,12 +3,9 @@ const gulp = require('gulp');
 const fs = require("fs");
 const browserify = require("browserify");
 const babelify = require("babelify");
-const uglify = require('gulp-uglify');
-const concat = require('gulp-concat');
 const sass = require('gulp-sass');
 const babel = require('gulp-babel');
 const header = require('gulp-header');
-const gutil = require('gulp-util');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const envify = require('envify/custom');
@@ -31,7 +28,8 @@ const BROWSER_GLOBALS = [
     'react-router',
     'redux',
     'redux-simple-router',
-    'request'
+    'request',
+    'lodash/function/debounce'
 ];
 
 /**

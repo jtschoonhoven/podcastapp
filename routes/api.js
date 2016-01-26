@@ -13,13 +13,22 @@ const onSuccess = function(res) {
     return data => res.send(data);
 };
 
+
+/**
+ * Stream an episode to client. Could run on separate server to scale.
+ */
 router.get('/media/:episodeId', (req, res) => {
     episodesController.fetchOne(req.params.episodeId).then(
         episode => {
             const content = episode.is_audio ? 'audio' : 'video';
             const type = episode.media_encoding || 'mpeg';
-            res.setHeader("content-type", `${content}/${type}`);
-            request(episode.media_url).pipe(res);
+            res.set({
+                'content-type': `${content}/${type}`,
+                'Accept-Ranges': 'bytes',
+                'Cache-Control': 'no-cache'
+            });
+            const headers = {range: req.headers.range};
+            request({url: episode.media_url, headers}).pipe(res);
         },
         onFailure(res)
     );
