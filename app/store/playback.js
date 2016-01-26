@@ -35,11 +35,11 @@ module.exports.reducer = function(state, action) {
         case 'PLAYBACK_SET_PROGRESS':
             update = {progress: action.value};
             break;
-        case 'PLAYBACK_SET_VOLUME':
-            update = {volume: action.value};
-            break;
         case 'PLAYBACK_SET_BUFFERED':
             update = {buffered: action.value};
+            break;
+        case 'PLAYBACK_SET_VOLUME':
+            update = {volume: action.value};
             break;
     }
     return Object.assign({}, state, update);
@@ -51,5 +51,7 @@ module.exports.actionCreators = {
     PLAYBACK_SET_VOLUME: (vol) => ({type: 'PLAYBACK_SET_VOLUME', value: vol}),
     PLAYBACK_FETCH: () => ({type: 'PLAYBACK_FETCH'}),
     PLAYBACK_FETCH_SUCCESS: (episode) => ({type: 'PLAYBACK_FETCH_SUCCESS', value: episode}),
-    SHOWS_FETCH_FAILURE: (fetch_msg) => ({type: 'SHOWS_FETCH_FAILURE', fetch_msg})
+    PLAYBACK_FETCH_FAILURE: (fetch_msg) => ({type: 'PLAYBACK_FETCH_FAILURE', fetch_msg}),
+    PLAYBACK_SET_PROGRESS: (value) => ({type: 'PLAYBACK_SET_PROGRESS', value}),
+    PLAYBACK_SET_BUFFERED: (value) => ({type: 'PLAYBACK_SET_BUFFERED', value})
 };

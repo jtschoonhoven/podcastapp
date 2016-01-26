@@ -62,7 +62,6 @@ gulp.task('bundle', ['jsx'], function() {
         }));
 
     b.transform(envify({[ENV]: env}));
-
     b.bundle().pipe(outFile);
 });
 
@@ -108,7 +107,11 @@ gulp.task('watch:bundle', function () {
  */
 gulp.task("jsx", function() {
   return gulp.src("./app/components_jsx/**/*.js")
-    .pipe(babel({plugins: ['transform-es2015-modules-commonjs', 'transform-react-jsx']}))
+    .pipe(babel({plugins: [
+        'transform-es2015-modules-commonjs',
+        'transform-react-jsx',
+        'transform-es2015-destructuring'
+    ]}))
     .pipe(header('/**\n * Compiled from JSX. Do not edit by hand.\n */\n'))
     .pipe(gulp.dest("./app/components/"));
 });
