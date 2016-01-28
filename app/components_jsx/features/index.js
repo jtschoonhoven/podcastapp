@@ -21,9 +21,17 @@ export default class Shows extends React.Component {
         });
 
         return (
-            <div className="shows">
-                <div className="show-row row">
-                    {showList}
+            <div id="features">
+                <div className="jumbotron">
+                    <div className="container">
+                        <h1>{'Hlelo, wlrod!'}</h1>
+                        <p>{'Blarg blarg blarg blarg!'}</p>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="show-row row">
+                        {showList}
+                    </div>
                 </div>
             </div>
         );

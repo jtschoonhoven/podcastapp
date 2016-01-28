@@ -1,4 +1,4 @@
-import React from "react";
+import React, {PropTypes} from "react";
 import {Link} from 'react-router';
 
 export default class Show extends React.Component {
@@ -43,8 +43,9 @@ export default class Show extends React.Component {
 
     render() {
         const showUrl = `/shows/${this.props.id}/${this.urlify(this.props.name)}`;
+
         return (
-            <div className="show col-xs-6 col-sm-3 col-md-3 col-lg-2 col-xl-1">
+            <div id='featured-show' className="show col-xs-6 col-sm-3 col-md-3 col-lg-2 col-xl-1">
                 <div className="thumbnail">
                     <link to={showUrl}>
                         <img src={this.props.image_url} alt="this.props.name" />
@@ -56,14 +57,16 @@ export default class Show extends React.Component {
                         </h3>
                         <p>{this.limitTextLength(this.props.description)}</p>
                     </div>
-
-                    <div className="btn-group" role="group">
-                        <Link className="btn btn-default btn-sm" to={showUrl}>
-                            {'Browse episodes'}
-                        </Link>
-                    </div>
                 </div>
             </div>
         );
     }
 }
+
+
+Show.propTypes = {
+    description: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    image_url: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
+};
