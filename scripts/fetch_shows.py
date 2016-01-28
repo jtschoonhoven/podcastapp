@@ -1,12 +1,7 @@
-#!/usr/bin/python
+#!/usr/local/bin/python
 import feedparser
 import hashlib
-import re
 import sys
-from bs4 import BeautifulSoup
-from os import path
-
-sys.path.append(path.dirname(__file__))
 from models import database, Publisher, Show, Episode, Tag, ShowTag, EpisodeTag
 
 
@@ -48,7 +43,8 @@ class FetchShows(object):
         if type(string) is unicode:
             string = string.decode('utf-8')
         if type(string) is str:
-            return str.lower()
+            string = string.lower()
+        return string
 
     def _sanitize_title(self, string):
         """Alphanum with limited special chars, formatted as title."""
@@ -175,5 +171,6 @@ if __name__ == '__main__':
         for url in urls:
             fetcher.fetch_one_show(url)
     else:
-        fetcher.fetch_one_show('http://feeds.feedburner.com/SlatePoliticalGabfest')
-        fetcher.fetch_one_show('http://feeds.wnyc.org/radiolab')
+        # fetcher.fetch_one_show('http://feeds.feedburner.com/SlatePoliticalGabfest')
+        # fetcher.fetch_one_show('http://feeds.wnyc.org/radiolab')
+        fetcher.fetch_one_show('http://voxtheweeds.slate.libsynpro.com/rss')
