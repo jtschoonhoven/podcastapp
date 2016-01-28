@@ -1,24 +1,35 @@
 import React, {PropTypes} from 'react';
-import debounce from 'lodash/function/debounce';
+import clickCoordinatesAsRatio from '../../../util/click-coordinates-as-ratio';
 
 
 export default class Volume extends React.Component {
-    handleChange() {
-        const oldVol = this.props.playback.volume;
-        const newVol = Number(document.getElementById('volume-slider').value);
-        if (oldVol !== newVol) {
-            this.props.actionCreators.playback.PLAYBACK_SET_VOLUME(newVol);
+
+    /**
+     * Get location of click in volume bar.
+     */
+    handleClick(e) {
+        const volume = clickCoordinatesAsRatio(e, window, 'volume-bar');
+        this.props.actionCreators.playback.PLAYBACK_SET_VOLUME(volume);
+    }
+
+    componentWillReceiveProps(newProps) {
+        const newVolume = newProps.playback.volume;
+        if (this.props.playback.volume !== newVolume) {
+            document.getElementById('media').volume = newVolume;
         }
     }
 
     render() {
-        const handleChange = debounce(this.handleChange, 1000, {leading: true}).bind(this);
-        const vol = this.props.playback.volume;
+        const handleClick = this.handleClick.bind(this);
+        const volume = this.props.playback.volume * 100 + '%';
+
         return (
             <div id="volume" className="col-xs-3 col-sm-2">
-                <form id="volume" className="volume navbar-form navbar-right" role="volume">
-                      <input id="volume-slider" onChange={handleChange} type="range" value={vol} />
-                </form>
+                <div id="volume-bar" onClick={handleClick} className="progress">
+                        <div className="progress-bar progress-bar-info" style={{width: volume}}>
+                            <span className="sr-only">{`Volume ${volume}`}</span>
+                        </div>
+                </div>
             </div>
         );
     }

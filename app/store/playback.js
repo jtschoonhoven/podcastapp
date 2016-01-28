@@ -6,7 +6,7 @@ const initialState = {
     fetching: false,
     length: 0,
     progress: 0,
-    volume: 100,
+    volume: 1,
     buffered: 0,
     episode: {},
     fetch_err: false,

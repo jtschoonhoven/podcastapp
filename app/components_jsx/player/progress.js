@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import debounce from 'lodash/function/debounce';
+import clickCoordinatesAsRatio from '../../../util/click-coordinates-as-ratio';
 
 export default class Progress extends React.Component {
     componentDidMount() {
@@ -10,15 +11,7 @@ export default class Progress extends React.Component {
      * Get location of click in progress bar as a percent.
      */
     handleClick(e) {
-        let x = 0;
-        e = e || window.event;
-        x = e.pageX || e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-
-        const {left, right} = document.getElementById('progress').getBoundingClientRect();
-        const width = right - left;
-        const offset = x - left;
-        const progressRatio = offset / width;
-
+        const progressRatio = clickCoordinatesAsRatio(e, window, 'progress-bar');
         const media = document.getElementById('media');
         media.currentTime = media.duration * progressRatio;
     }
@@ -70,13 +63,15 @@ export default class Progress extends React.Component {
         const bufferedPct = this.props.playback.buffered - this.props.playback.progress + '%';
 
         return (
-            <div id="progress" onClick={handleClick} className="progress col-xs-8 col-sm-9">
+            <div id="progress" className="col-xs-8 col-sm-9">
+                <div id="progress-bar" className="progress" onClick={handleClick}>
                     <div className="progress-bar progress-bar-success" style={{width: progressPct}}>
-                        <span className="sr-only">{`${progressPct} Complete (success)`}</span>
+                        <span className="sr-only">{`${progressPct} complete`}</span>
                     </div>
-                    <div className="progress-bar progress-bar-warning progress-bar-striped" style={{width: bufferedPct}}>
-                        <span className="sr-only">{`${bufferedPct} Complete (warning)`}</span>
+                    <div className="progress-bar progress-bar-warning progress-bar-striped active" style={{width: bufferedPct}}>
+                        <span className="sr-only">{`${bufferedPct} buffered`}</span>
                     </div>
+                </div>
             </div>
         );
     }
